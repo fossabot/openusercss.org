@@ -64,12 +64,13 @@ changes, open http://dev.openusercss.local in your browser
 1. Hack away!
 
 ## Running tests
-There are three types of tests you can run:
-- Unit tests - `yarn test:unit`/`yarn run test:unit`
-- API tests - `yarn test:api`/`yarn run test:api`
-- End-to-end tests - `yarn test:e2e`/`yarn run test:e2e`
+You can run the tests with `yarn test:full`. At the time of writing, this only
+works on Linux, because it uses the startscript to launch the site in test mode.  
+This is required because the tests include checking for whether or not notification
+e-mails are being sent out correctly.
 
-When you submit the Pull Request, an automated system will run these tests and validate the PR. Running the rest of the tests is optional, but I recommend doing it before pushing anyway.
+When you submit the Pull Request, an automated system should run these tests and validate the PR.
+Running the rest of the tests is optional, but I recommend doing it before pushing anyway.
 
 ## Committing  
 This project follows the `standard` commit message convention. For example:  

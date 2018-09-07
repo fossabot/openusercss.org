@@ -65,7 +65,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../scss/component';
+  @import '../../../scss/component';
 
   .mw500 {
     max-width: 500px;

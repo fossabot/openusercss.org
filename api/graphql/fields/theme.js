@@ -23,14 +23,20 @@ export default {
         'theme': id,
       })
 
-      const reducer = (acc, value) => {
-        const result = acc + value
+      const reducer = (acc, curr) => {
+        const result = acc + curr
 
         return result
       }
 
+      let value = 0
+
+      if (ratings.length !== 0) {
+        value = ratings.map((item) => item.value).reduce(reducer)
+      }
+
       return {
-        'value': ratings.map((item) => item.value).reduce(reducer),
+        value,
         'count': ratings.length,
       }
     },

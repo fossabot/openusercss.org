@@ -1,4 +1,3 @@
-import mustAuthenticate from 'api/lib/enforce-session'
 import staticConfig from 'lib/config'
 import jwt from 'jsonwebtoken'
 import moment from 'moment'
@@ -6,7 +5,7 @@ import {
   sendEmail,
 } from 'api/email/mailer'
 
-const createSendEmail = async ({email, displayname,}) => {
+const createSendEmail = async ({email, display,}) => {
   const config = await staticConfig()
   const token = jwt.sign({
     email,
@@ -27,7 +26,7 @@ const createSendEmail = async ({email, displayname,}) => {
     'to':       email,
     'template': 'email-verification-request',
     'locals':   {
-      displayname,
+      display,
       link,
       expires,
     },
@@ -39,20 +38,18 @@ const createSendEmail = async ({email, displayname,}) => {
 export default {
   'name': 'resendVerification',
 
-  async resolver (root, options, {Session, token,}) {
-    const session = await mustAuthenticate(token, Session)
-
-    if (session.user.emailVerified) {
+  async resolver (root, options, {Session, viewer,}) {
+    if (viewer.emailVerified) {
       throw new Error('email-already-verified')
     }
 
-    const result = await createSendEmail(session.user)
+    const result = await createSendEmail(viewer)
 
     if (!result.accepted) {
       throw new Error('email-not-accepted')
     }
 
-    if (result.accepted[0] !== session.user.email) {
+    if (result.accepted[0] !== viewer.email) {
       throw new Error(result.accepted)
     }
 

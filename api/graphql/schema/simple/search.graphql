@@ -13,10 +13,6 @@ input SearchFilterStringInput {
   beginsWith:  String
 }
 
-input SearchFilterIDInput {
-  equals: String
-}
-
 input SearchFilterDateInput {
   accuracy: Int
   at:       DateTime
@@ -25,9 +21,6 @@ input SearchFilterDateInput {
 }
 
 input SearchFilterUserInput {
-  id:        SearchFilterIDInput
-  createdBy: SearchFilterUserInput
-  updatedBy: SearchFilterUserInput
   createdAt: SearchFilterDateInput
   updatedAt: SearchFilterDateInput
   display:   SearchFilterStringInput
@@ -37,18 +30,20 @@ input SearchFilterUserInput {
 }
 
 input SearchFilterInput {
-  fullText:  SearchFilterStringInput
+  indexed:   SearchFilterStringInput
 
-  id:        SearchFilterIDInput
-  createdBy: SearchFilterUserInput
-  updatedBy: SearchFilterUserInput
   createdAt: SearchFilterDateInput
   updatedAt: SearchFilterDateInput
   display:   SearchFilterStringInput
 }
 
+input SearchOptionsInput {
+  user:  Int
+  theme: Int
+}
+
 input SearchInput {
-  where: SearchFilterInput!
-  limit: Int
-  skip:  Int
+  terms: String!
+  limit: SearchOptionsInput
+  skip:  SearchOptionsInput
 }

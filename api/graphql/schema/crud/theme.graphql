@@ -5,6 +5,7 @@
 # import Stats from '../imported/stats.graphql'
 # import {Rating} from './rating.graphql'
 #
+# import {SortInput} from '../simple/sort.graphql'
 # import URL from '../scalar/url.graphql'
 
 type ThemeVairableOption {
@@ -43,6 +44,12 @@ type Theme implements Crud & Managed & Node {
   variables:   [ThemeVariable]!
   stats:       Stats!
   rating:      ThemeRating!
+}
+
+input ThemeListInput {
+  sort:  SortInput!
+  limit: Int
+  skip:  Int
 }
 
 input ThemeVariableOptionInput {

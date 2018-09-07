@@ -37,7 +37,7 @@
         //   'bio':         '',
         //   'donationUrl': 'https://',
         // },
-        'editing': {
+        'editing':  {
           'email':       null,
           'password':    null,
           'displayname': null,
@@ -128,7 +128,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../scss/component';
+  @import '../scss/component';
 
   .mw500 {
     max-width: 500px;

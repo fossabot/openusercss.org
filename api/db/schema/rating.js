@@ -1,11 +1,6 @@
 import mongoose, {crud, Schema,} from '../interface/crud'
 
 const ratingSchema = crud({
-  'createdBy': {
-    'type':     Schema.Types.ObjectId,
-    'required': true,
-    'ref':      'User',
-  },
   'theme': {
     'type':     Schema.Types.ObjectId,
     'ref':      'Theme',
