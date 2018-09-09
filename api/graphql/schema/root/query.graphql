@@ -26,6 +26,6 @@ type Query {
   ): SearchResults!
 
   themeList(
-    input: ThemeListInput!
+    input: ThemeListInput
   ): [Theme]!
 }

@@ -18,6 +18,10 @@ export default {
       return User.findById(updatedBy)
     },
 
+    screenshots ({screenshots,}) {
+      return screenshots.map((item) => item.url)
+    },
+
     async rating ({id,}, data, {Rating,}) {
       const ratings = await Rating.find({
         'theme': id,
@@ -52,6 +56,19 @@ export default {
       })
 
       return matomoTransformer(stats)
+    },
+
+    // DEPRECATED:
+    title ({display, title,}, data, {User,}) {
+      return display || title
+    },
+
+    user ({createdBy, user,}, data, {User,}) {
+      return User.findById(createdBy || user)
+    },
+
+    lastUpdate ({updatedAt, lastUpdate,}) {
+      return updatedAt || lastUpdate
     },
   },
 }

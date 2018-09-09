@@ -1,9 +1,13 @@
 import log from 'chalk-console'
 import mongodb from 'mongodb'
+import {sync as getConfig,} from 'lib/config'
 import {cloneDeep,} from 'lodash'
 
 const connect = () => new Promise((resolve, reject) => {
-  mongodb.connect('mongodb://localhost:27017', {
+  const config = getConfig()
+  const connectionUrl = config.get('database.main')
+
+  mongodb.connect(connectionUrl, {
     'useNewUrlParser': true,
   }, (error, client) => {
     if (error) {

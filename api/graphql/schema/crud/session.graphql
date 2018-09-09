@@ -22,6 +22,8 @@ type Session implements Crud & Managed & Node {
   expiresAt: String!
   ip:        String!
   ua:        String!
+
+  _id: ID! @deprecated(reason: "Use id (without underscore)!")
 }
 
 input SessionInput {

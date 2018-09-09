@@ -17,6 +17,8 @@ type Rating implements Crud & Managed & Node {
   theme: Theme!
   """The value can be *-1* or *1*, which will affect the overall score."""
   value: Int!
+
+  _id: ID! @deprecated(reason: "Use id (without underscore)!")
 }
 
 input RatingInput {

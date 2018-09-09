@@ -12,5 +12,9 @@ export default {
     __resolveType (root) {
       return map[root.collection.name]
     },
+
+    _id ({id, _id,}) {
+      return id || _id
+    },
   },
 }

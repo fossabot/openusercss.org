@@ -41,5 +41,20 @@ export default {
 
       return matomoTransformer(stats)
     },
+
+    // DEPRECATED:
+    username ({display, username,}) {
+      return display.toLowerCase() || username
+    },
+
+    displayname ({display, displayname,}) {
+      return display || displayname
+    },
+
+    smallAvatarUrl ({email,}) {
+      return gravatar(email, {
+        'size': 128,
+      })
+    },
   },
 }

@@ -4,11 +4,11 @@ export default {
   'query': 'themeList',
 
   async root (root, {input,}, {Theme, Rating,}) {
-    const {sort, limit = 50, skip = 0,} = input
+    const {sort = {}, limit = 50, skip = 0,} = input
     const themes = await Theme.find({}, null, {
       'limit': Math.min(limit, 50),
       'skip':  Math.max(skip, 0),
-    }).sort(pick(sort, 'creatdAt', 'updatedAt', 'display'))
+    }).sort(pick(sort, 'createdAt', 'updatedAt', 'display'))
 
     if (typeof sort.ratings === 'number') {
       const ratings = await Rating.find({
@@ -18,10 +18,23 @@ export default {
       })
 
       themes.sort((a, b) => {
-        const aRatings = ratings.filter((item) => item.theme.toString() === a.id)
-        const bRatings = ratings.filter((item) => item.theme.toString() === b.id)
+        const aRatingList = ratings
+        .filter((item) => item.theme.toString() === a.id)
 
-        if (aRatings.length > bRatings.length) {
+        const aRatings = aRatingList
+        .reduce((acc, curr) => {
+          return acc + curr.value
+        }, 0)
+
+        const bRatingList = ratings
+        .filter((item) => item.theme.toString() === b.id)
+
+        const bRatings = bRatingList
+        .reduce((acc, curr) => {
+          return acc + curr.value
+        }, 0)
+
+        if (aRatings * aRatingList.length > bRatings * bRatingList.length) {
           return 0 + sort.ratings
         }
 

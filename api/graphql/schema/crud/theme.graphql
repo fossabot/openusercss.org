@@ -44,10 +44,15 @@ type Theme implements Crud & Managed & Node {
   variables:   [ThemeVariable]!
   stats:       Stats!
   rating:      ThemeRating!
+
+  _id: ID! @deprecated(reason: "Use id (without underscore)!")
+  user: User! @deprecated(reason: "Use createdBy!")
+  lastUpdate: DateTime! @deprecated(reason: "Use updatedAt!")
+  title: String! @deprecated(reason: "Use display!")
 }
 
 input ThemeListInput {
-  sort:  SortInput!
+  sort:  SortInput
   limit: Int
   skip:  Int
 }
