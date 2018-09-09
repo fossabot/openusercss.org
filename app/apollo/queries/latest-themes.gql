@@ -1,5 +1,10 @@
 query($limit: Int) {
-  latestThemes(limit: $limit) {
+  latestThemes: themeList(input: {
+    limit: $limit
+    sort: {
+      createdAt: -1
+    }
+  }) {
     _id
     user {
       _id
@@ -7,6 +12,10 @@ query($limit: Int) {
       displayname
       avatarUrl
       smallAvatarUrl
+    }
+    rating {
+      count
+      value
     }
     title
     description

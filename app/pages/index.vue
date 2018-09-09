@@ -139,20 +139,34 @@
                   :to="'/theme/' + theme._id"
                 )
                   +theme-card(true)
-                    .media
-                      .media-left
-                        figure.image.is-48x48
-                          progressive-image(
-                            :src="theme.user.avatarUrl",
-                            :placeholder="theme.user.smallAvatarUrl",
-                            width="100%",
-                            height="3rem",
-                            size="contain"
-                          )
-                      .media-content
-                        b {{theme.user.displayname}}
-                        p
-                          | {{theme.stats.visits}} visits
+                    .card-content
+                      .media
+                        .media-left
+                          figure.image.is-48x48
+                            progressive-image(
+                              :src="theme.user.avatarUrl",
+                              :placeholder="theme.user.smallAvatarUrl",
+                              width="100%",
+                              height="3rem",
+                              size="contain"
+                            )
+                        .media-content
+                          b {{theme.user.displayname}}
+                          //- pre {{theme}}
+                          p
+                            fa-icon(icon="star")
+                            span(v-if="theme.stats.visits !== 0")
+                              | {{theme.stats.visits}} visits
+                              | Rating: {{theme.rating.value}}
+                            span(v-else-if="theme.rating.value > 0")
+                              | {{theme.rating.value}} points
+                              | by {{theme.rating.count}} people
+                            span(v-else)
+                              | Meh
+
+                    .card-footer
+                      .card-footer-item(alt="Test")
+                        | Yo
 
         .section
           h2.has-bottom-margin Announcements
