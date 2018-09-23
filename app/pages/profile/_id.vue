@@ -32,7 +32,7 @@
       }, 20000)
     },
     mounted () {
-      if (this.viewer && this.viewer._id === this.$route.params.id) {
+      if (this.viewer && this.viewer.id === this.$route.params.id) {
         this.viewingOwn = true
       }
     },
@@ -51,7 +51,7 @@
       //     const gets = []
       //
       //     this.themes.forEach((theme) => {
-      //       gets.push(this.$store.dispatch('stats/hits', theme._id,))
+      //       gets.push(this.$store.dispatch('stats/hits', theme.id,))
       //     })
       //
       //     return Promise.all(gets)
@@ -119,15 +119,15 @@
         return result
       },
       user () {
-        return this.$store.getters['users/all'].find((user) => user._id === this.$route.params.id)
+        return this.$store.getters['users/all'].find((user) => user.id === this.$route.params.id)
       },
       themes () {
-        return this.$store.getters['themes/all'].filter((theme) => theme.user._id === this.$route.params.id)
+        return this.$store.getters['themes/all'].filter((theme) => theme.user.id === this.$route.params.id)
       },
       lastOnlineDisplay () {
         const user = this.user
 
-        return `Last seen ${user.lastSeenReason}, ${moment(this.time).to(user.lastSeen)}`
+        return `Last seen ${user.lastSeenReason}, ${moment(this.time).to(user.lastSeenAt)}`
       },
     },
   }
@@ -158,7 +158,7 @@
           .level
             .level-left
               h1 {{user.displayname | placeholder('Profile')}}
-            .level-right.ouc-profile-action-buttons(v-show="viewer && viewer._id === user._id")
+            .level-right.ouc-profile-action-buttons(v-show="viewer && viewer.id === user.id")
               .tile.is-parent.is-paddingless.is-brand-primary
                 .tile.ouc-new-theme-button-wrapper.is-child
                   nuxt-link.button.is-backgroundless.is-borderless.has-text-white.ouc-new-theme-button(to="/theme/edit")
@@ -173,7 +173,7 @@
                   .columns
                     .column.is-4.is-hcentered
                       figure.image.has-indicator
-                        fa-icon(v-if="isOnline(user.lastSeen)", icon="circle", color="#06BC5A")
+                        fa-icon(v-if="isOnline(user.lastSeenAt)", icon="circle", color="#06BC5A")
                         progressive-image(
                           :src="user.avatarUrl",
                           :placeholder="user.smallAvatarUrl",
@@ -197,7 +197,7 @@
                       :anchor-attributes="$anchorAttributes"
                     )
                     p(v-else)
-                      | {{user.displayname}} has not written a bio yet.
+                      | {{user.display}} has not written a bio yet.
 
               div(v-if="viewingOwn")
                 hr
@@ -252,8 +252,8 @@
               .columns.is-multiline(v-if="viewingOwn")
                 nuxt-link.column.is-12(
                   v-for="(theme, index) in filterBy(orderBy(themes, sortBy, sortReverse ? 0 : -1), filter)",
-                  :key="theme._id",
-                  :to="'/theme/' + theme._id"
+                  :key="theme.id",
+                  :to="'/theme/' + theme.id"
                 )
                   +theme-microdata
                   .box
@@ -263,7 +263,7 @@
                       p(v-if="sortBy === 'createdAt'")
                         | {{sortOptions.find((option) => option.value === sortBy).title}}:
                         | {{theme[sortBy] | moment('from', 'now')}}
-                      p(v-else-if="sortBy === 'lastUpdate'")
+                      p(v-else-if="sortBy === 'updatedAt'")
                         | {{sortOptions.find((option) => option.value === sortBy).title}}:
                         | {{theme[sortBy] | moment('from', 'now')}}
                       p(v-else-if="sortBy === 'stats.visits'")
@@ -287,8 +287,8 @@
               .columns.is-multiline(v-else)
                 nuxt-link.column.is-6(
                   v-for="(theme, index) in themes",
-                  :key="theme._id",
-                  :to="'/theme/' + theme._id"
+                  :key="theme.id",
+                  :to="'/theme/' + theme.id"
                 )
                   +theme-microdata
                   +theme-card(true)

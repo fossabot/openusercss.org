@@ -8,7 +8,7 @@ import verifyTokenQuery from '~/apollo/queries/verify-token.gql'
 const validators = {}
 
 validators.user = struct({
-  '_id':            'string',
+  'id':            'string',
   'displayname':    'string',
   'username':       'string',
   'avatarUrl':      'string',
@@ -26,7 +26,7 @@ validators.user = struct({
 
 validators.session = struct({
   '__typename': 'string?',
-  '_id':        'string',
+  'id':        'string',
   'token':      'string',
   'ip':         'string',
   'ua':         'string',

@@ -11,12 +11,12 @@ export const mutations = {
     state.loading = isLoading
   },
   delete (state, id,) {
-    const index = state.users.find((user) => user._id === id)
+    const index = state.users.find((user) => user.id === id)
 
     state.users.splice(index, 1)
   },
   upsert (state, newUser,) {
-    const existingIndex = state.users.findIndex((user) => newUser._id === user._id)
+    const existingIndex = state.users.findIndex((user) => newUser.id === user.id)
 
     if (existingIndex !== -1) {
       state.users[existingIndex] = newUser
@@ -34,7 +34,7 @@ export const getters = {
     return state.users
   },
   single (state) {
-    return (id) => state.users.find((user) => user._id === id)
+    return (id) => state.users.find((user) => user.id === id)
   },
 }
 

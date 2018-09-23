@@ -15,7 +15,7 @@ mixin theme-microdata
       meta(itemprop="ratingCount", :value="theme.ratings ? theme.ratings.length : 0")
       meta(itemprop="bestRating", value="5")
       meta(itemprop="worstRating", value="1")
-      meta(itemprop="ratingValue", :value="averageRating")
+      //- meta(itemprop="ratingValue", :value="averageRating")
 
     meta(itemprop="url", :value="'/theme/' + theme._id")
     meta(itemprop="installUrl", :value="'https://api.openusercss.org/theme/' + theme._id + '.user.css'")
@@ -23,8 +23,8 @@ mixin theme-microdata
     meta(v-for="screenshot in theme.screenshots", itemprop="screenshot", :value="screenshot")
 
     div(itemprop="author", itemtype="Person")
-      meta(itemprop="name", :value="theme.user.displayname")
-      meta(itemprop="url", :value="'/profile/' + theme.user._id")
+      meta(itemprop="name", :value="theme.createdBy.display")
+      meta(itemprop="url", :value="'/profile/' + theme.createdBy.id")
 
     div(itemprop="softwareAddOn", itemtype="SoftwareApplication")
       meta(itemprop="name", value="Stylus")

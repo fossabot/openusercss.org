@@ -54,7 +54,7 @@
         'fancyVariables': 'on',
         'notFound':       false,
         'editingTheme':   {
-          '_id':         '',
+          'id':         '',
           'title':       '',
           'description': '',
           'version':     '',
@@ -113,7 +113,7 @@
         if (validated) {
           const readyTheme = cloneDeep(this.editingTheme)
 
-          readyTheme.id = readyTheme._id
+          readyTheme.id = readyTheme.id
 
           Reflect.deleteProperty(readyTheme, 'user')
 

@@ -32,7 +32,7 @@
           return '/login'
         }
 
-        return `/profile/${this.viewer._id}`
+        return `/profile/${this.viewer.id}`
       },
     },
     data () {

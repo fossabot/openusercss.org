@@ -1,6 +1,4 @@
 import client from '~/lib/apollo-client'
-
-import ratingsQuery from '~/apollo/queries/ratings.gql'
 import rateMutation from '~/apollo/mutations/rate.gql'
 
 export const state = () => ({
@@ -11,7 +9,7 @@ export const state = () => ({
 export const getters = {
   theme (state) {
     return (id) => {
-      return state.ratings.filter((rating) => rating.theme._id === id)
+      return state.ratings.filter((rating) => rating.theme.id === id)
     }
   },
 }
@@ -22,7 +20,7 @@ export const mutations = {
     if (Array.isArray(ratings)) {
       ratings.forEach((rating) => {
         const existingIndex = state.ratings.findIndex((item) => {
-          return rating._id === item._id
+          return rating.id === item.id
         })
 
         if (existingIndex === -1) {
@@ -34,7 +32,7 @@ export const mutations = {
     } else {
       const rating = ratings
       const existingIndex = state.ratings.findIndex((item) => {
-        return rating._id === item._id
+        return rating.id === item.id
       })
 
       if (existingIndex === -1) {
@@ -60,18 +58,5 @@ export const actions = {
     })
 
     commit('upsert', data.rate)
-  },
-
-  async theme ({commit, state,}, {
-    id,
-  }) {
-    const {data,} = await client.query({
-      'query':     ratingsQuery,
-      'variables': {
-        id,
-      },
-    })
-
-    commit('upsert', data.ratings)
   },
 }

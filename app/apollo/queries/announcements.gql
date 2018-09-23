@@ -1,5 +1,5 @@
 query {
-  forumTopics(id: 11) {
+  forumTopics(category: 11) {
     title
     url
     created

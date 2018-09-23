@@ -41,7 +41,7 @@
     },
     'methods': {
       averageRating (theme) {
-        const ratings = this.$store.getters['ratings/theme'](theme._id)
+        const ratings = this.$store.getters['ratings/theme'](theme.id)
         let sum = 0
 
         ratings.forEach((rating) => {
@@ -87,15 +87,15 @@
             .columns.is-multiline
               nuxt-link.column.is-4(
                 v-for="(theme, index) in orderBy(limitBy(themes, 6), 'createdAt', -1)",
-                :key="theme._id",
-                :to="'/theme/' + theme._id"
+                :key="theme.id",
+                :to="'/theme/' + theme.id"
               )
                 +theme-card(false, true)
                   .columns.is-mobile.is-fullwidth
                     .column.is-3
                       progressive-image(
-                        :src="theme.user.avatarUrl",
-                        :placeholder="theme.user.smallAvatarUrl",
+                        :src="theme.createdBy.avatarUrl",
+                        :placeholder="theme.createdBy.smallAvatarUrl",
                         width="3rem",
                         height="3rem",
                         size="contain",
@@ -111,15 +111,15 @@
               .columns.is-multiline
                 nuxt-link.column.is-12(
                   v-for="(theme, index) in orderBy(limitBy(themes, 9), 'createdAt', -1)",
-                  :key="theme._id",
-                  :to="'/theme/' + theme._id"
+                  :key="theme.id",
+                  :to="'/theme/' + theme.id"
                 )
                   +theme-card(false, true)
                     .columns.is-mobile.is-fullwidth
                       .column.is-3
                         progressive-image(
-                          :src="theme.user.avatarUrl",
-                          :placeholder="theme.user.smallAvatarUrl",
+                          :src="theme.createdBy.avatarUrl",
+                          :placeholder="theme.createdBy.smallAvatarUrl",
                           width="3rem",
                           height="3rem",
                           size="contain",
@@ -135,8 +135,8 @@
 
                 nuxt-link.column.is-4(
                   v-for="(theme, index) in limitBy(orderBy(themes, 'stats.visits', -1), 9)",
-                  :key="theme._id",
-                  :to="'/theme/' + theme._id"
+                  :key="theme.id",
+                  :to="'/theme/' + theme.id"
                 )
                   +theme-card(true)
                     .card-content
@@ -144,25 +144,31 @@
                         .media-left
                           figure.image.is-48x48
                             progressive-image(
-                              :src="theme.user.avatarUrl",
-                              :placeholder="theme.user.smallAvatarUrl",
+                              :src="theme.createdBy.avatarUrl",
+                              :placeholder="theme.createdBy.smallAvatarUrl",
                               width="100%",
                               height="3rem",
                               size="contain"
                             )
                         .media-content
-                          b {{theme.user.displayname}}
+                          b {{theme.createdBy.display}}
                           //- pre {{theme}}
                           p
-                            fa-icon(icon="star")
-                            span(v-if="theme.stats.visits !== 0")
+                            span(v-if="theme.stats.visits > 10")
+                              fa-icon(icon="caret-up")
                               | {{theme.stats.visits}} visits
-                              | Rating: {{theme.rating.value}}
-                            span(v-else-if="theme.rating.value > 0")
+                            span(v-else-if="theme.rating.value > 1")
+                              fa-icon(icon="star")
                               | {{theme.rating.value}} points
-                              | by {{theme.rating.count}} people
+                            span(v-else-if="theme.stats.views > 10")
+                              fa-icon(icon="eye")
+                              | {{theme.stats.views}} views
+                            span(v-else-if="theme.rating.count > 1")
+                              fa-icon(icon="star")
+                              | {{theme.rating.count}} ratings
                             span(v-else)
-                              | Meh
+                              fa-icon(icon="clock")
+                              | {{theme.updatedAt | moment('from', 'now')}}
 
                     .card-footer
                       .card-footer-item(alt="Test")

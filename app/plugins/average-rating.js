@@ -3,7 +3,7 @@ import Vue from 'vue'
 Vue.mixin({
   'methods': {
     countAverageRating (theme) {
-      const ratings = this.$store.getters['ratings/theme'](theme._id)
+      const ratings = this.$store.getters['ratings/theme'](theme.id)
       let sum = 0
 
       ratings.forEach((rating) => {

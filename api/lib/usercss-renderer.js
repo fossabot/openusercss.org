@@ -1,17 +1,15 @@
-import Theme from 'api/db/schema/theme'
+import {Theme,} from 'api/db/schema/theme'
 import {stringify,} from 'usercss-meta'
 
 export default async (req, res, next) => {
-  const foundTheme = await Theme.findOne({
-    '_id': req.params.id,
-  }, {
-    'populate': true,
-  })
+  const foundTheme = await Theme.findById(req.params.id).populate('createdBy')
 
   if (foundTheme) {
-    if (!foundTheme.ratings) {
-      foundTheme.ratings = []
-    }
+    const varsMap = {}
+
+    foundTheme.variables.forEach((variable) => {
+      varsMap[variable.name] = variable
+    })
 
     res.type('css')
     res.write(stringify({
@@ -21,8 +19,8 @@ export default async (req, res, next) => {
       'version':      foundTheme.version,
       'license':      foundTheme.license,
       'description':  foundTheme.description,
-      'vars':         foundTheme.variables,
-      'author':       `${foundTheme.user.displayname} (https://openusercss.org/profile/${foundTheme.user._id})`,
+      'vars':         varsMap,
+      'author':       `${foundTheme.createdBy.display} (https://openusercss.org/profile/${foundTheme.createdBy.id})`,
       'preprocessor': 'uso',
     }, {
       'alignKeys': true,

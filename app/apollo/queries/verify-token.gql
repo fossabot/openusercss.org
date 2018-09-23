@@ -1,16 +1,16 @@
 query($token: String!) {
   verifyToken(token: $token) {
-    _id
-    user {
-      _id
+    id
+    createdBy {
+      id
       username
-      displayname
+      display
       avatarUrl
       smallAvatarUrl
-      lastSeen
+      lastSeenAt
       lastSeenReason
       createdAt
-      lastUpdate
+      updatedAt
       bio
       donationUrl
     }

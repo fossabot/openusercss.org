@@ -82,7 +82,7 @@
           return Promise.all(puts)
           .then(() => {
             this.$toast.success('Your account details have been saved successfully', 'Saved')
-            this.$router.push(`/profile/${this.viewer._id}`)
+            this.$router.push(`/profile/${this.viewer.id}`)
           })
           .catch((error) => {
             this.$toast.error(error.message, 'Error')
@@ -98,7 +98,7 @@
         let id = null
 
         if (this.viewer) {
-          id = this.viewer._id
+          id = this.viewer.id
         }
 
         return cloneDeep(this.$store.getters['users/single'](id))
@@ -226,7 +226,7 @@
                                   | on {{parseUA(session.ua).os.name}}
                                 p.level-left(v-else)
                                   | Unknown device
-                                p.level-right(v-if="viewerSession._id === session._id")
+                                p.level-right(v-if="viewerSession.id === session.id")
                                   | (this session)
                             .card-content.is-paddingless
                               table.table.is-fullwidth.is-marginless.is-striped.is-hoverable

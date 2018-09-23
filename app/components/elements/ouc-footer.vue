@@ -112,7 +112,7 @@
         .container
           .tile.is-parent.is-paddingless
             +donation-button(
-              "//www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NQE35LHY6NKS6",
+              "//www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_buttonid=NQE35LHY6NKS6",
               "Donate!",
               "/img/paypal.icon-x64.png",
               "/img/paypal.icon-x16.png"

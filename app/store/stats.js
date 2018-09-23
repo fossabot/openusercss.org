@@ -77,7 +77,7 @@ export const actions = {
 
     themes.forEach((theme) => {
       gets.push(themeHits({
-        'id': theme._id,
+        'id': theme.id,
       }))
     })
 
@@ -87,7 +87,7 @@ export const actions = {
       result.forEach((payload, index) => {
         if (payload) {
           commit('theme', {
-            'id': themes[index]._id,
+            'id': themes[index].id,
             payload,
           })
         }

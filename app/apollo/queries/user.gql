@@ -1,14 +1,14 @@
 query($id: ID!) {
   user(id: $id) {
-    _id
+    id
     username
-    displayname
+    display
     avatarUrl
     smallAvatarUrl
-    lastSeen
+    lastSeenAt
     lastSeenReason
     createdAt
-    lastUpdate
+    updatedAt
     bio
     donationUrl
   }

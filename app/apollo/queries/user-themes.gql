@@ -1,35 +1,30 @@
 query($id: ID!) {
-  userThemes(id: $id) {
-    _id
-    user {
-      _id
-      username
-      displayname
-      avatarUrl
-      smallAvatarUrl
-    }
-    title
-    description
-    content
-    createdAt
-    lastUpdate
-    version
-    screenshots
-    license
-    variables {
-      type
-      label
-      name
-      value
-    }
-    stats {
-      visits
-      views
-      avgGeneration
-      avgRetention
-      exitRate
-      bounceRate
-      totalTime
+  user(id: $id) {
+    themes {
+      id
+      title
+      description
+      content
+      createdAt
+      updatedAt
+      version
+      screenshots
+      license
+      variables {
+        type
+        label
+        name
+        value
+      }
+      stats {
+        visits
+        views
+        avgGeneration
+        avgRetention
+        exitRate
+        bounceRate
+        totalTime
+      }
     }
   }
 }

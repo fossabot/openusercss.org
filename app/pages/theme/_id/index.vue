@@ -83,22 +83,22 @@
       ...mapGetters({
         'viewer': 'session/viewer',
       }),
-      averageRating () {
-        const ratings = this.$store.getters['ratings/theme'](this.$route.params.id)
-        let sum = 0
-
-        ratings.forEach((rating) => {
-          sum = sum + rating.value
-        })
-
-        const result = Math.round(sum / ratings.length * 100) / 100
-
-        if (isNaN(result)) {
-          return null
-        }
-
-        return result
-      },
+      // averageRating () {
+      //   const ratings = this.$store.getters['ratings/theme'](this.$route.params.id)
+      //   let sum = 0
+      //
+      //   ratings.forEach((rating) => {
+      //     sum = sum + rating.value
+      //   })
+      //
+      //   const result = Math.round(sum / ratings.length * 100) / 100
+      //
+      //   if (isNaN(result)) {
+      //     return null
+      //   }
+      //
+      //   return result
+      // },
       theme () {
         return this.$store.getters['themes/single'](this.$route.params.id)
       },
@@ -107,7 +107,7 @@
           return {}
         }
 
-        return this.$store.getters['users/single'](this.theme.user._id)
+        return this.$store.getters['users/single'](this.theme.createdBy.id)
       },
       canDoEventInstall () {
         if (!this.extension || process.server) {
@@ -124,7 +124,7 @@
         return `https://api.${process.env.OUC_DOMAIN || process.env.DOMAIN || 'openusercss.org'}`
       },
       installLink () {
-        return `${this.apiUrl}/${path.join('theme', `${this.theme._id}.user.css`)}`
+        return `${this.apiUrl}/${path.join('theme', `${this.theme.id}.user.css`)}`
       },
       license () {
         if (this.theme.license.toLowerCase() === 'other') {
@@ -171,10 +171,10 @@
         this.$modal.hide('delete-theme')
       },
       deleteTheme () {
-        this.$store.dispatch('themes/delete', this.theme._id)
+        this.$store.dispatch('themes/delete', this.theme.id)
         .then((data) => {
           this.$toast.success('The requested theme was successfully deleted', 'Theme deleted')
-          this.$router.push(`/profile/${this.viewer._id}`)
+          this.$router.push(`/profile/${this.viewer.id}`)
         })
         .catch((error) => {
           this.$toast.error(error.message, 'Error while deleting theme')
@@ -200,13 +200,13 @@
           /* eslint-disable-next-line prefer-template */
           const rendered = stringify({
             'name':         this.theme.title,
-            'namespace':    `https://openusercss.org/theme/${this.theme._id}`,
-            'homepageURL':  `https://openusercss.org/theme/${this.theme._id}`,
+            'namespace':    `https://openusercss.org/theme/${this.theme.id}`,
+            'homepageURL':  `https://openusercss.org/theme/${this.theme.id}`,
             'version':      this.theme.version,
             'license':      this.theme.license,
             'description':  this.theme.description,
             'vars':         this.theme.variables,
-            'author':       `${this.theme.user.displayname} (https://openusercss.org/profile/${this.theme.user._id})`,
+            'author':       `${this.theme.createdBy.display} (https://openusercss.org/profile/${this.theme.createdBy.id})`,
             'preprocessor': 'uso',
           }, {
             'alignKeys': true,
@@ -228,7 +228,7 @@
             'responseMethod': 'ouc-is-installed-response',
             'payload':        {
               'name':      this.theme.title,
-              'namespace': `https://openusercss.org/theme/${this.theme._id}`,
+              'namespace': `https://openusercss.org/theme/${this.theme.id}`,
             },
           })
           const waitp = delay(200)
@@ -370,12 +370,12 @@
               h1 {{theme.title}}
             .level-right
               .tile.is-parent.is-paddingless.is-brand-primary
-                .tile.is-child(v-show="viewer && user._id === viewer._id")
+                .tile.is-child(v-show="viewer && user.id === viewer.id")
                   .content.is-marginless.is-pulled-right
                     button.button.is-danger(@click="confirmDeleteTheme") Delete theme
-                .tile.is-child(v-show="viewer && user._id === viewer._id")
+                .tile.is-child(v-show="viewer && user.id === viewer.id")
                   .is-marginless.is-pulled-right
-                    nuxt-link.button.is-primary.is-backgroundless(:to="'/theme/edit/' + theme._id") Edit theme
+                    nuxt-link.button.is-primary.is-backgroundless(:to="'/theme/edit/' + theme.id") Edit theme
                 .tile
                   .tile.is-child
                     .content.is-marginless.is-pulled-right
@@ -407,17 +407,17 @@
                       .tile.is-child.is-parent.is-vertical
                         .level.is-marginless
                           .level-left
-                            nuxt-link(:to="'/profile/' + user._id")
+                            nuxt-link(:to="'/profile/' + user.id")
                               button.button.is-brand-primary
-                                p Visit {{theme.user.displayname}}'s profile
+                                p Visit {{theme.createdBy.display}}'s profile
                             | &nbsp;
                             button.button.is-grey-light(
                               @click="viewSource"
                             ) View source
                         br
 
-                        p(v-if="averageRating") Average rating: {{averageRating}}
-                        p(v-else) Not rated yet
+                        //- p(v-if="averageRating") Average rating: {{averageRating}}
+                        p Not rated yet
                         p Created: {{formatMoment(theme.createdAt)}}
                         p Last updated: {{formatMoment(theme.lastUpdate)}}
                         p Version: {{theme.version}}
@@ -425,7 +425,7 @@
                           br
                           .notification.is-primary.is-marginless
                             fa-icon(icon="info")
-                            | {{theme.user.displayname}} has applied their
+                            | {{theme.createdBy.display}} has applied their
                             | own license to this theme.
                             br
                             | Please see the description below for details.
@@ -448,12 +448,12 @@
                               p Rate this theme:
                             .level-right
                               no-ssr
-                                star-rating(
-                                  :rating="averageRating",
-                                  :star-size="25",
-                                  :show-rating="false",
-                                  @rating-selected="sendRating"
-                                )
+                                //- star-rating(
+                                //-   :rating="averageRating",
+                                //-   :star-size="25",
+                                //-   :show-rating="false",
+                                //-   @rating-selected="sendRating"
+                                //- )
 
               .box
                 vue-markdown(

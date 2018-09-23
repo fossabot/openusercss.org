@@ -131,7 +131,7 @@
               .column.is-6(v-for="user in results.users")
                 +user-microdata
 
-                router-link(:to="'/profile/' + user._id")
+                router-link(:to="'/profile/' + user.id")
                   .card
                     .card-header.is-primary
                       .level.card-header-title.is-mobile
@@ -155,8 +155,8 @@
             .columns.is-multiline(v-else)
               nuxt-link.column.is-4(
                 v-for="(theme, index) in results.themes",
-                :key="theme._id",
-                :to="'/theme/' + theme._id"
+                :key="theme.id",
+                :to="'/theme/' + theme.id"
               )
                 +theme-microdata
                 +theme-card(true)

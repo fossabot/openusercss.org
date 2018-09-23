@@ -23,12 +23,12 @@ export const mutations = {
     state.editing[id] = theme
   },
   delete (state, id,) {
-    const index = state.themes.findIndex((theme) => theme._id === id)
+    const index = state.themes.findIndex((theme) => theme.id === id)
 
     state.themes.splice(index, 1)
   },
   upsert (state, newTheme,) {
-    const existingIndex = state.themes.findIndex((theme) => newTheme._id === theme._id)
+    const existingIndex = state.themes.findIndex((theme) => newTheme.id === theme.id)
 
     if (existingIndex !== -1) {
       state.themes[existingIndex] = newTheme
@@ -58,7 +58,7 @@ export const getters = {
     return state.themes
   },
   single (state) {
-    return (id) => state.themes.find((theme) => theme._id === id)
+    return (id) => state.themes.find((theme) => theme.id === id)
   },
   editCache (state,) {
     return state.editing
@@ -109,7 +109,7 @@ export const actions = {
     })
 
     data.latestThemes.forEach((theme) => {
-      commit('users/upsert', theme.user, {
+      commit('users/upsert', theme.createdBy, {
         'root': true,
       })
       commit('upsert', theme)
@@ -125,7 +125,7 @@ export const actions = {
     })
 
     data.popularThemes.forEach((theme) => {
-      commit('users/upsert', theme.user, {
+      commit('users/upsert', theme.createdBy, {
         'root': true,
       })
       commit('upsert', theme)
@@ -143,7 +143,7 @@ export const actions = {
         },
       })
 
-      commit('users/upsert', data.theme.user, {
+      commit('users/upsert', data.theme.createdBy, {
         'root': true,
       })
       commit('upsert', data.theme)

@@ -38,7 +38,7 @@ const renderOptions = (options) => {
 export const getUser = async (id) => {
   const users = db.getCollection('users')
   const existing = users.findOne({
-    '_id': id.toString(),
+    'id': id.toString(),
   })
 
   if (!existing) {
@@ -63,14 +63,14 @@ export const getUser = async (id) => {
   }
 
   return users.findOne({
-    '_id': id.toString(),
+    'id': id.toString(),
   }) || {}
 }
 
 export const getTheme = async (id) => {
   const themes = db.getCollection('themes')
   const existing = themes.findOne({
-    '_id': id.toString(),
+    'id': id.toString(),
   })
 
   if (!existing) {
@@ -96,7 +96,7 @@ export const getTheme = async (id) => {
   }
 
   return themes.findOne({
-    '_id': id.toString(),
+    'id': id.toString(),
   }) || {}
 }
 

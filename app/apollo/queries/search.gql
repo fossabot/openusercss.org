@@ -1,26 +1,26 @@
 query($terms: String!, $limit: Int, $skip: Int) {
   search(terms: $terms, limit: $limit, skip: $skip) {
     users {
-      _id
+      id
       username
-      displayname
+      display
       avatarUrl
       smallAvatarUrl
       lastSeen
     }
 
     themes {
-      _id
+      id
       user {
-        _id
+        id
         username
-        displayname
+        display
         avatarUrl
         smallAvatarUrl
       }
       title
       createdAt
-      lastUpdate
+      updatedAt
       screenshots
     }
   }
