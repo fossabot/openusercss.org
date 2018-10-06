@@ -29,6 +29,7 @@
   [![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=for-the-badge&maxAge=3600&label=Contributors&colorA=005fff&colorB=ffb450)](#contributing)
   
   [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge&maxAge=3600&label=Pull%20requests&colorA=005fff&colorB=ffb450)](http://makeapullrequest.com)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FOpenUserCSS%2Fopenusercss.org.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FOpenUserCSS%2Fopenusercss.org?ref=badge_shield)
 
 </div>
 
@@ -40,6 +41,9 @@
 </div>
 
 ----
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FOpenUserCSS%2Fopenusercss.org.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FOpenUserCSS%2Fopenusercss.org?ref=badge_large)
 
 ## Contributing
 
